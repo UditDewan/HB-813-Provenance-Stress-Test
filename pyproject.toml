@@ -1,0 +1,18 @@
+[project]
+name = "hb813"
+version = "0.1.0"
+description = "Measuring whether AI content provenance signals survive ordinary image handling"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = [
+    "c2pa-python>=0.37.8",
+    "matplotlib>=3.11.1",
+    "pandas>=3.0.5",
+    "piexif>=1.1.3",
+    "pillow>=12.3.0",
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

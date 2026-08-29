@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Corpus images and derived files are not committed: licensing, and they are
+# rebuildable. `data/results/*.csv` IS committed -- it is the evidence.
+data/corpus/*
+!data/corpus/manifest.json
+data/derived/
+data/results/pending/
+inbox/

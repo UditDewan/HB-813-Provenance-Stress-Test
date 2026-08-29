@@ -1,0 +1,26 @@
+{
+  "A.jpg": {
+    "acquired": "2026-08-29",
+    "class": "human_unsigned",
+    "license": "Apache-2.0 (contentauth/c2pa-python test fixtures)",
+    "note": "unsigned, carries EXIF and XMP",
+    "sha256": "f999fd78bfe8a83c96e468a078830ba94485bc1bc6fd086fb94a43bd29dd0f23",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-python/main/tests/fixtures/A.jpg"
+  },
+  "C.jpg": {
+    "acquired": "2026-08-29",
+    "class": "c2pa_signed_camera",
+    "license": "Apache-2.0 (contentauth/c2pa-python test fixtures)",
+    "note": "signed fixture, valid embedded manifest",
+    "sha256": "4cbac1af485155f878d12a610da851c2938f2ce886189c61d9da7a0a43bd00b5",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-python/main/tests/fixtures/C.jpg"
+  },
+  "cloud.jpg": {
+    "acquired": "2026-08-29",
+    "class": "c2pa_signed_ai",
+    "license": "Apache-2.0 (contentauth/c2pa-python test fixtures)",
+    "note": "provenance is a remote URL, nothing embedded",
+    "sha256": "e6ad9f51be5bb83f137322a3f260b5881738e3528aee208727e75b6daaba6092",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-python/main/tests/fixtures/cloud.jpg"
+  }
+}
