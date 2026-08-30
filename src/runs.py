@@ -48,7 +48,10 @@ def append(row: dict) -> None:
     if unknown:
         raise ValueError(f"unknown columns: {sorted(unknown)}")
     RUNS_CSV.parent.mkdir(parents=True, exist_ok=True)
-    fresh = not RUNS_CSV.exists()
+    # Not just "does it exist": a truncated or zero-byte file would otherwise
+    # get a data row as its first line, and pd.read_csv would silently promote
+    # that row to the header, corrupting every reading of the evidence.
+    fresh = not RUNS_CSV.exists() or RUNS_CSV.stat().st_size == 0
     with RUNS_CSV.open("a", newline="", encoding="utf-8") as fh:
         writer = csv.DictWriter(fh, COLUMNS)
         if fresh:

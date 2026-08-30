@@ -27,9 +27,26 @@ def _open(data: bytes) -> Image.Image:
     return Image.open(io.BytesIO(data))
 
 
+def _flatten(im: Image.Image) -> Image.Image:
+    """RGB, compositing any transparency onto white.
+
+    Pillow's convert("RGB") drops the alpha channel, which composites against
+    black. Every editor, browser and screen puts a transparent pixel on a white
+    page, so black would be measuring a file no ordinary user could produce.
+    Palette images carry transparency in .info rather than a mode, hence both
+    checks.
+    """
+    if im.mode in ("RGBA", "LA", "PA") or "transparency" in im.info:
+        im = im.convert("RGBA")
+        canvas = Image.new("RGB", im.size, "white")
+        canvas.paste(im, (0, 0), im)
+        return canvas
+    return im.convert("RGB")
+
+
 def _encode(im: Image.Image, **kw) -> bytes:
     buf = io.BytesIO()
-    im.convert("RGB").save(buf, **kw)
+    _flatten(im).save(buf, **kw)
     return buf.getvalue()
 
 
@@ -95,13 +112,11 @@ def screenshot(data: bytes) -> bytes:
     manifest, or signature can. This is the single most common path by which an
     ordinary person moves an image, and the reason it deserves its own row.
 
-    ponytail: no real screen capture. Same-size canvas, no scaling to a device
+    ponytail: no real screen capture. Same-size output, no scaling to a device
     resolution -- resize() already covers scaling, and mixing them would make
     this row measure two things.
     """
-    canvas = Image.new("RGB", _open(data).size, "white")
-    canvas.paste(_open(data).convert("RGB"), (0, 0))
-    return _encode(canvas, format="PNG")
+    return _encode(_open(data), format="PNG")
 
 
 screenshot.label = "Screenshotted (pixels recaptured, container discarded)"

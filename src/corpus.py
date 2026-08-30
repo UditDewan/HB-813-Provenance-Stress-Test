@@ -97,7 +97,12 @@ def fetch() -> None:
     for name, note in SEED.items():
         path = CORPUS / name
         if not path.exists():
-            urllib.request.urlretrieve(f"{SEED_BASE}/{name}", path)
+            # Download to a sidecar and rename, so an interrupted fetch cannot
+            # leave a truncated file that the next run skips and then records as
+            # the canonical sha256 for that image.
+            part = path.with_name(path.name + ".part")
+            urllib.request.urlretrieve(f"{SEED_BASE}/{name}", part)
+            part.replace(path)
             print(f"downloaded {name}")
         entries[name] = {
             "sha256": sha256(path),

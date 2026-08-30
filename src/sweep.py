@@ -73,7 +73,13 @@ def _result(d: dict) -> dict:
 
 
 def _ext(data: bytes) -> str:
-    return ".png" if data[:8] == b"\x89PNG\r\n\x1a\n" else ".jpg"
+    if data[:8] == b"\x89PNG\r\n\x1a\n":
+        return ".png"
+    # metadata_scrub hands a WEBP straight back unchanged; calling that .jpg
+    # mislabels the file kept under --keep-files.
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        return ".webp"
+    return ".jpg"
 
 
 if __name__ == "__main__":

@@ -95,3 +95,23 @@ def test_metadata_scrub_breaks_the_signature_when_there_is_exif(tmp_path):
     assert detect.c2pa_state(out) == detect.PRESENT_INVALID
     codes = {s.get("code") for s in detect.c2pa_detail(out).get("validation_status", [])}
     assert "assertion.dataHash.mismatch" in codes
+
+
+def test_transparency_composites_onto_white_not_black():
+    """A transparent pixel becomes white, the colour every screen puts behind it.
+
+    Pillow's convert("RGB") drops the alpha channel, which composites against
+    black. Two corpus PNGs are palette images with transparency, so the
+    un-fixed path produced a black-backed image no ordinary user could have
+    made -- and the screenshot row is meant to be the most ordinary path there is.
+    """
+    import io
+
+    im = Image.new("RGBA", (4, 2), (255, 0, 0, 255))
+    im.putpixel((0, 0), (0, 0, 0, 0))
+    buf = io.BytesIO()
+    im.save(buf, format="PNG")
+
+    out = Image.open(io.BytesIO(TRANSFORMS["screenshot"](buf.getvalue()))).convert("RGB")
+    assert out.getpixel((0, 0)) == (255, 255, 255)
+    assert out.getpixel((3, 1)) == (255, 0, 0)

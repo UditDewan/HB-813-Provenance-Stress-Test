@@ -62,7 +62,11 @@ def load() -> pd.DataFrame:
     # The CSV is append-only, so a re-run leaves older rows behind. One
     # experiment is one (source, transform chain, platform); keep its latest.
     key = ["source_sha256", "transform_chain", "platform"]
-    return df.sort_values("timestamp").drop_duplicates(subset=key, keep="last")
+    # Stable sort: timestamps are second-granular and a sweep writes dozens of
+    # rows per second, so ties are normal. keep="last" must mean "later in the
+    # append-only file", which an unstable sort does not guarantee.
+    return (df.sort_values("timestamp", kind="stable")
+              .drop_duplicates(subset=key, keep="last"))
 
 
 def breakdown(df: pd.DataFrame, by: str) -> pd.DataFrame:
