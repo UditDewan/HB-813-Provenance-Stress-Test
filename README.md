@@ -22,7 +22,12 @@ uv run pytest
 Or `make report`, which does all of it.
 
 If `uv` fails with `invalid peer certificate: UnknownIssuer`, your network is
-intercepting HTTPS. Set `UV_SYSTEM_CERTS=1` (or pass `--system-certs`).
+intercepting HTTPS. Set `UV_SYSTEM_CERTS=1` (or pass `--system-certs`). If it
+fails with `os error 396` on a hardlink, the clone is inside a cloud-synced
+folder such as OneDrive; set `UV_LINK_MODE=copy`.
+
+Verified to reproduce from a clean clone on 2026-08-29: identical outcomes for
+all 540 experiments, byte-identical `results/tables.md`.
 
 ## What gets measured
 
