@@ -13,7 +13,7 @@ technically weak from her own volunteers can amend it.
 
 ```bash
 uv sync
-uv run python -m src.corpus fetch    # three public fixtures, enough to prove it runs
+uv run python -m src.corpus fetch    # 27 reference-library fixtures, 11 of them signed
 uv run python -m src.sweep           # every local transform over every corpus image
 uv run python -m src.report          # tables + figures into results/
 uv run pytest
@@ -44,12 +44,18 @@ else. Nothing hand-edits the CSV.
 
 ## Adding your own images
 
-The seed corpus is three public fixtures. The real corpus is 40–60 images across
-five classes — see `CLASSES` in `src/corpus.py` — collected by hand: Adobe
-Firefly exports, CAI camera samples, open-weight local generation, the team's
-own photos, and generator overlay watermarks. Images are not committed
-(licensing); `data/corpus/manifest.json` is, so anyone can confirm they are
-testing the same bytes.
+The seed corpus is the C2PA reference library's own test fixtures — 27 images,
+11 of them carrying a valid manifest. They cover a wide range of *manifest
+structures* over a narrow range of *photographs*, which is enough to show that
+manifest structure does not change the answer and not enough to say anything
+about image content.
+
+The real corpus is 40–60 images across the five classes in `CLASSES`
+(`src/corpus.py`), collected by hand: Adobe Firefly exports, CAI camera samples,
+open-weight local generation, the team's own photos, and generator overlay
+watermarks. None of it can be downloaded, which is why it is not here yet.
+Images are not committed (licensing); `data/corpus/manifest.json` is, so anyone
+can confirm they are testing the same bytes.
 
 ```bash
 # drop files into data/corpus/, then:
@@ -76,7 +82,7 @@ uv run python -m src.roundtrip finish --run-id <id> --file inbox/download.jpg
 | `src/` | the harness — see `CONTRIBUTING.md` for the module map |
 | `data/results/runs.csv` | every experiment ever run; committed |
 | `results/` | `findings-memo.md`, generated `tables.md`, `figures/` |
-| `policy/` | statutory comparison across jurisdictions |
+| `policy/state-comparison.md` | statutory comparison, read from primary sources |
 | `docs/PLATFORM-PROTOCOL.md` | how to run a platform test reproducibly |
 | `CONTRIBUTING.md` | project constraints; read before contributing |
 

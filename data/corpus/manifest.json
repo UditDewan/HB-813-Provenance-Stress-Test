@@ -1,26 +1,218 @@
 {
-  "A.jpg": {
-    "acquired": "2026-08-29",
-    "class": "human_unsigned",
-    "license": "Apache-2.0 (contentauth/c2pa-python test fixtures)",
-    "note": "unsigned, carries EXIF and XMP",
-    "sha256": "f999fd78bfe8a83c96e468a078830ba94485bc1bc6fd086fb94a43bd29dd0f23",
-    "source": "https://raw.githubusercontent.com/contentauth/c2pa-python/main/tests/fixtures/A.jpg"
-  },
   "C.jpg": {
     "acquired": "2026-08-29",
-    "class": "c2pa_signed_camera",
-    "license": "Apache-2.0 (contentauth/c2pa-python test fixtures)",
-    "note": "signed fixture, valid embedded manifest",
-    "sha256": "4cbac1af485155f878d12a610da851c2938f2ce886189c61d9da7a0a43bd00b5",
-    "source": "https://raw.githubusercontent.com/contentauth/c2pa-python/main/tests/fixtures/C.jpg"
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "one signed claim, no ingredients",
+    "sha256": "a2d14755db55de67a47c04090340d8266e892367be4104a45626d7a6fa6e9ffd",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/C.jpg"
+  },
+  "CA.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "signed claim over one signed ingredient",
+    "sha256": "e71bff58fc57640803e6e65f7534e2fb0c2f99018c85276cc14b30f04427cc76",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/CA.jpg"
+  },
+  "CACA.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "two levels of signed ingredients",
+    "sha256": "e735fe9e50057f8280baf96182a38d516a4acfb144da7f1e6aad32de44c76aea",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/CACA.jpg"
+  },
+  "CACAE-uri-CA.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "nested ingredients, one referenced by URI",
+    "sha256": "66baccd7a155946eec0bcffd1c26a635e462493816414f677baf336989a0482a",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/CACAE-uri-CA.jpg"
+  },
+  "CA_ct.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "as CA.jpg, with a trusted timestamp",
+    "sha256": "e7d6cb48303593c0a34de44aadf9b6f4386a8b263c74e76b6c19ea97eb87e853",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/CA_ct.jpg"
+  },
+  "CIE-sig-CA.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "signed claim with an embedded ingredient",
+    "sha256": "0c343c0f7c07ff6a1e8a0ec3d69d79fe2990d72450e778702e0fdae6458206c5",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/CIE-sig-CA.jpg"
+  },
+  "C_with_CAWG_data.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "carries CAWG identity assertions",
+    "sha256": "fa0b257c863cb5b367135a017813ce0c1fbfc690a03e94acdd047c25c2d1ed46",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/C_with_CAWG_data.jpg"
+  },
+  "E-sig-CA.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "expired or otherwise invalid signature",
+    "sha256": "20dc072a4c843d3b7d7cb4f4002fbb4d8f20d7ee859ca726f2458c1e0358a98c",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/E-sig-CA.jpg"
+  },
+  "IMG_0003.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "unsigned, carries EXIF and XMP",
+    "sha256": "f999fd78bfe8a83c96e468a078830ba94485bc1bc6fd086fb94a43bd29dd0f23",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/IMG_0003.jpg"
+  },
+  "P1000827.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "unsigned camera original, EXIF and XMP",
+    "sha256": "9d33d48863ac4f94711e289bebc43e849d45be1819ee16c479bd9a8385f1ae08",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/P1000827.jpg"
+  },
+  "XCA.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "signature does not match the claim",
+    "sha256": "81f20702a2e81611b29aa773f811b59ade6095acd3d089d6ffdae6b591d6d5a5",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/XCA.jpg"
+  },
+  "adobe-20220124-E-clm-CAICAI.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "long ingredient chain, claim fails",
+    "sha256": "b3ff3f00c66602280977d3e4d962a836d33ab83953d0009f7c1e6490d0065feb",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/adobe-20220124-E-clm-CAICAI.jpg"
+  },
+  "boxhash.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "box hash rather than a data hash",
+    "sha256": "b63a8df44b09d78cbe60b2c828b0a76b97b953407942fd9a2d0698c77c29b176",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/boxhash.jpg"
   },
   "cloud.jpg": {
     "acquired": "2026-08-29",
-    "class": "c2pa_signed_ai",
-    "license": "Apache-2.0 (contentauth/c2pa-python test fixtures)",
-    "note": "provenance is a remote URL, nothing embedded",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "remote manifest reference, JPEG",
     "sha256": "e6ad9f51be5bb83f137322a3f260b5881738e3528aee208727e75b6daaba6092",
-    "source": "https://raw.githubusercontent.com/contentauth/c2pa-python/main/tests/fixtures/cloud.jpg"
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/cloud.jpg"
+  },
+  "earth_apollo17.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "unsigned, EXIF and XMP",
+    "sha256": "b7ffd2579d0921aae0c0b2edf3cf5ef22621b07f27d7c56a856a09e5428779ad",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/earth_apollo17.jpg"
+  },
+  "legacy_ingredient_hash.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "older ingredient hash form",
+    "sha256": "e64168ba337fb8793f8577d4a9194f21df4bf0bce7b90485fe4dc46ccf0d2d2d",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/legacy_ingredient_hash.jpg"
+  },
+  "libpng-test.png": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "unsigned PNG, no metadata",
+    "sha256": "c5c635a1dbbec9a768c3bb4527dbaea62a1be05efcee17d66799cc07b673b29b",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/libpng-test.png"
+  },
+  "libpng-test_with_url.png": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "remote manifest reference, PNG",
+    "sha256": "8ffdf61c6497696b4a18f8e04b416c749f7ad67f4a1529862f50231db86d1411",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/libpng-test_with_url.png"
+  },
+  "mars.webp": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "unsigned WEBP, no metadata",
+    "sha256": "e8402f9020e2e0152e9284525f2220afa79897918cc7db0d4815d86e892d3d13",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/mars.webp"
+  },
+  "no_alg.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "unknown hash algorithm -- verifier refuses to check it",
+    "sha256": "7c91641416c18319b823c292ae603c5354892ac365c05543519154c48c6a1f8a",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/no_alg.jpg"
+  },
+  "no_manifest.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "unsigned, large, EXIF and XMP",
+    "sha256": "9ac395ca04fc9d348acf6f81920f5e894d336341c3f764ca86c354eec6f7c2d6",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/no_manifest.jpg"
+  },
+  "ocsp.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "signature carries a stapled OCSP response",
+    "sha256": "49a6b089bf3fe610960ef91b2beb81c86b62e7d531c97f33fc029841d864b2cb",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/ocsp.jpg"
+  },
+  "prerelease.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "pre-release spec manifest -- verifier refuses to check it",
+    "sha256": "17ea3035caaa4eb6f7cb06c89bda6c86a74a92c40dc5b8119e9954ed9cd99831",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/prerelease.jpg"
+  },
+  "sample1.png": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "unsigned PNG carrying EXIF",
+    "sha256": "0bd72c972c14e5fd27d8473c5599e801031576e1398f384c40c3394696a2619a",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/sample1.png"
+  },
+  "sample1.webp": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "unsigned WEBP",
+    "sha256": "006ee0871284b06a311286b9b72b3d083951ea6e9c78aa14d7894742daebfad3",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/sample1.webp"
+  },
+  "test_xmp.webp": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "unsigned WEBP carrying EXIF and XMP",
+    "sha256": "769bf38d77496cc610ad0a0a5515f77e5c0ac185b64f99e4fa1ac4ede6dc290b",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/test_xmp.webp"
+  },
+  "update_manifest.jpg": {
+    "acquired": "2026-08-29",
+    "class": "sdk_test_fixture",
+    "license": "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)",
+    "note": "update manifest over a prior claim",
+    "sha256": "c855bbce1e2ea50bfc1da939f55b7d1bce97a9afa5a0e671ed05d59dc7950b3b",
+    "source": "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures/update_manifest.jpg"
   }
 }

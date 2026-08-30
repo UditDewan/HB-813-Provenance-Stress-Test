@@ -46,24 +46,39 @@ c2pa.load_settings(json.dumps({"verify": {"remote_manifest_fetch": False}}), "js
 _REMOTE_PREFIX = "Remote:"
 
 
-def _read(path) -> tuple[dict, bool]:
-    """(validation report, whether provenance is only a remote reference)."""
+def _read(path) -> tuple[dict, bool, str]:
+    """(validation report, provenance is only a remote reference, refusal reason).
+
+    A refusal reason means the reader found something and would not validate it:
+    an unknown hash algorithm, a manifest from a pre-release spec. That is a
+    manifest a verifier cannot check, which is `present_invalid` -- the file
+    carries a claim and nobody can confirm it. Exactly the situation an
+    enforcement agency would have to make a decision about.
+    """
     try:
-        return json.loads(c2pa.Reader(str(path)).json()), False
+        return json.loads(c2pa.Reader(str(path)).json()), False, ""
     except c2pa.c2pa._C2paManifestNotFound:
-        return {}, False
+        return {}, False, ""
+    except (c2pa.c2pa._C2paIo, c2pa.c2pa._C2paNotSupported):
+        raise  # a missing file or an unreadable container is a bug, not a result
     except c2pa.C2paError as exc:
         if str(exc).startswith(_REMOTE_PREFIX):
-            return {}, True
-        raise
+            return {}, True, ""
+        return {}, False, str(exc)
+
+
+def _state(report: dict, refused: str) -> str:
+    if refused:
+        return PRESENT_INVALID
+    if not report:
+        return ABSENT
+    return PRESENT_VALID if report.get("validation_state") in _VALID_STATES else PRESENT_INVALID
 
 
 def c2pa_state(path: str | Path) -> str:
     """Return one of PRESENT_VALID / PRESENT_INVALID / ABSENT."""
-    report, _ = _read(path)
-    if not report:
-        return ABSENT
-    return PRESENT_VALID if report.get("validation_state") in _VALID_STATES else PRESENT_INVALID
+    report, _, refused = _read(path)
+    return _state(report, refused)
 
 
 def c2pa_detail(path: str | Path) -> dict:
@@ -82,17 +97,13 @@ def describe(path: str | Path) -> dict:
     with Image.open(path) as im:
         width, height = im.size
         exif_present = bool(im.getexif())
-    report, remote_ref = _read(path)
-    if report:
-        state = PRESENT_VALID if report.get("validation_state") in _VALID_STATES else PRESENT_INVALID
-    else:
-        state = ABSENT
+    report, remote_ref, refused = _read(path)
     return {
         "sha256": hashlib.sha256(raw).hexdigest(),
         "bytes": len(raw),
         "width": width,
         "height": height,
-        "c2pa_state": state,
+        "c2pa_state": _state(report, refused),
         # Not a fourth outcome: an asset whose only provenance is a URL to a
         # vendor's server carries nothing self-verifying, so it reads as absent.
         # The flag is here because "the mark is a link" is its own policy problem.

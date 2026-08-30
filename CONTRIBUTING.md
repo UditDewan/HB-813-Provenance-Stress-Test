@@ -67,6 +67,11 @@ Deviations from the original plan, and why:
   transform family would be one file per three-line function.
 - The round-trip CLI is `src.roundtrip`, not `src.logging.roundtrip`: a package
   named `logging` shadows the standard library.
+- `CLASSES` has a sixth entry, `sdk_test_fixture`, for the C2PA reference
+  library's own fixtures. They are the only signed images that can be fetched
+  from a URL, so they are the whole corpus until the hand-collected one exists.
+  Labelling them honestly beats filing them under a real-world class they do not
+  belong to.
 
 ## Conventions
 - Every experiment writes a row to `data/results/runs.csv` with a run ID,

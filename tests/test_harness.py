@@ -14,7 +14,8 @@ from src import detect
 from src.corpus import CORPUS
 from src.transforms import TRANSFORMS
 
-SIGNED = CORPUS / "C.jpg"
+SIGNED = CORPUS / "C.jpg"                 # signed, carries no EXIF
+SIGNED_WITH_EXIF = CORPUS / "ocsp.jpg"    # signed, carries EXIF
 
 pytestmark = pytest.mark.skipif(
     not SIGNED.exists(), reason="corpus not built -- run: python -m src.corpus fetch"
@@ -64,13 +65,33 @@ def test_transform_returns_a_decodable_image(name, tmp_path):
         im.verify()
 
 
-def test_metadata_scrub_leaves_the_pixels_alone():
-    """It deletes the EXIF block without re-encoding, so C2PA is untouched.
-
-    Worth asserting because it is the one transform that separates "metadata
-    removed" from "file rebuilt" -- and it shows a privacy feature people are
-    told to use does not, by itself, destroy provenance.
-    """
+def test_metadata_scrub_is_a_noop_when_there_is_no_exif():
+    """Nothing to delete, so the bytes come back identical and C2PA is untouched."""
     data = SIGNED.read_bytes()
     assert detect.c2pa_state(SIGNED) == detect.PRESENT_VALID
-    assert TRANSFORMS["metadata_scrub"](data) == data  # C.jpg carries no EXIF to remove
+    assert not detect.describe(SIGNED)["exif_present"]
+    assert TRANSFORMS["metadata_scrub"](data) == data
+
+
+@pytest.mark.skipif(not SIGNED_WITH_EXIF.exists(), reason="corpus not built")
+def test_metadata_scrub_breaks_the_signature_when_there_is_exif(tmp_path):
+    """The finding that reframes the memo, so it gets a test.
+
+    "Remove properties and personal information" is a privacy feature people are
+    told to use. On a signed image that actually carries EXIF it deletes a
+    segment the manifest hashes over, so the claim stays attached and stops
+    matching: present_invalid, assertion.dataHash.mismatch.
+
+    A user who did nothing wrong ends up distributing an image that carries a
+    broken provenance claim. That is the middle outcome, arrived at innocently,
+    and it is why detection here is three-valued.
+    """
+    assert detect.describe(SIGNED_WITH_EXIF)["exif_present"]
+    assert detect.c2pa_state(SIGNED_WITH_EXIF) == detect.PRESENT_VALID
+
+    out = tmp_path / "scrubbed.jpg"
+    out.write_bytes(TRANSFORMS["metadata_scrub"](SIGNED_WITH_EXIF.read_bytes()))
+
+    assert detect.c2pa_state(out) == detect.PRESENT_INVALID
+    codes = {s.get("code") for s in detect.c2pa_detail(out).get("validation_status", [])}
+    assert "assertion.dataHash.mismatch" in codes

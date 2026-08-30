@@ -29,18 +29,57 @@ CLASSES = [
     "ai_unsigned",          # open-weight local generation -- the realistic case
     "human_unsigned",       # team-captured photos, negative control
     "visible_watermark",    # generator default overlays, a different failure mode
+    "sdk_test_fixture",     # the reference library's own fixtures -- see below
 ]
 
-# Enough to prove the harness runs from a clean clone. The real 40-60 image
-# corpus is collected by hand: Firefly exports, Leica samples, local generation,
-# and the team's own photos. Those cannot be fetched from a URL.
+# The seed corpus is the C2PA reference library's test fixtures. They are the
+# only signed assets that can be fetched from a URL, and they are the reason
+# this study has an n at all before the hand-collected corpus exists.
+#
+# Be honest about what they are. They cover a wide range of *manifest*
+# structures -- single claim, nested ingredients, remote URI, box hash, OCSP
+# response, CAWG identity data -- over a narrow range of *images*: several are
+# the same photograph at two sizes. So the seed measures whether manifest
+# structure changes the answer (it does not) and cannot measure whether image
+# content does. That is what the 40-60 image hand-collected corpus is for:
+# Firefly exports, Leica samples, local generation, the team's own photos.
+# None of those can be downloaded, which is why they are not here.
 SEED = {
-    "C.jpg": ("c2pa_signed_camera", "signed fixture, valid embedded manifest"),
-    "A.jpg": ("human_unsigned", "unsigned, carries EXIF and XMP"),
-    "cloud.jpg": ("c2pa_signed_ai", "provenance is a remote URL, nothing embedded"),
+    # Signed, valid manifest -- the survival denominator.
+    "C.jpg": "one signed claim, no ingredients",
+    "CA.jpg": "signed claim over one signed ingredient",
+    "CA_ct.jpg": "as CA.jpg, with a trusted timestamp",
+    "CACA.jpg": "two levels of signed ingredients",
+    "CACAE-uri-CA.jpg": "nested ingredients, one referenced by URI",
+    "CIE-sig-CA.jpg": "signed claim with an embedded ingredient",
+    "C_with_CAWG_data.jpg": "carries CAWG identity assertions",
+    "boxhash.jpg": "box hash rather than a data hash",
+    "legacy_ingredient_hash.jpg": "older ingredient hash form",
+    "ocsp.jpg": "signature carries a stapled OCSP response",
+    "update_manifest.jpg": "update manifest over a prior claim",
+    # Manifest present, does not verify -- the middle outcome, at the source.
+    "XCA.jpg": "signature does not match the claim",
+    "E-sig-CA.jpg": "expired or otherwise invalid signature",
+    "adobe-20220124-E-clm-CAICAI.jpg": "long ingredient chain, claim fails",
+    "no_alg.jpg": "unknown hash algorithm -- verifier refuses to check it",
+    "prerelease.jpg": "pre-release spec manifest -- verifier refuses to check it",
+    # Provenance is only a URL to a vendor's server; nothing embedded.
+    "cloud.jpg": "remote manifest reference, JPEG",
+    "libpng-test_with_url.png": "remote manifest reference, PNG",
+    # No provenance at all -- controls, and the EXIF/XMP comparison arm.
+    "IMG_0003.jpg": "unsigned, carries EXIF and XMP",
+    "P1000827.jpg": "unsigned camera original, EXIF and XMP",
+    "no_manifest.jpg": "unsigned, large, EXIF and XMP",
+    "earth_apollo17.jpg": "unsigned, EXIF and XMP",
+    "sample1.png": "unsigned PNG carrying EXIF",
+    "sample1.webp": "unsigned WEBP",
+    "test_xmp.webp": "unsigned WEBP carrying EXIF and XMP",
+    "mars.webp": "unsigned WEBP, no metadata",
+    "libpng-test.png": "unsigned PNG, no metadata",
 }
-SEED_BASE = "https://raw.githubusercontent.com/contentauth/c2pa-python/main/tests/fixtures"
-SEED_LICENSE = "Apache-2.0 (contentauth/c2pa-python test fixtures)"
+SEED_CLASS = "sdk_test_fixture"
+SEED_BASE = "https://raw.githubusercontent.com/contentauth/c2pa-rs/main/sdk/tests/fixtures"
+SEED_LICENSE = "MIT OR Apache-2.0 (contentauth/c2pa-rs test fixtures)"
 
 
 def load() -> dict:
@@ -55,14 +94,14 @@ def save(entries: dict) -> None:
 def fetch() -> None:
     CORPUS.mkdir(parents=True, exist_ok=True)
     entries = load()
-    for name, (cls, note) in SEED.items():
+    for name, note in SEED.items():
         path = CORPUS / name
         if not path.exists():
             urllib.request.urlretrieve(f"{SEED_BASE}/{name}", path)
             print(f"downloaded {name}")
         entries[name] = {
             "sha256": sha256(path),
-            "class": cls,
+            "class": SEED_CLASS,
             "source": f"{SEED_BASE}/{name}",
             "license": SEED_LICENSE,
             "acquired": entries.get(name, {}).get("acquired", str(date.today())),

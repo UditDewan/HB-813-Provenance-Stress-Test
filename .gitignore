@@ -10,3 +10,6 @@ data/corpus/*
 data/derived/
 data/results/pending/
 inbox/
+
+# scratch from source fetching
+.firecrawl/

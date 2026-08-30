@@ -21,12 +21,13 @@ Do not explain C2PA yet. Do not explain the harness at all.
 
 Hand over the one-pager. Walk the table on it, top to bottom.
 
-> Every ordinary thing a person does to an image destroys the mark. Saving it
-> at slightly lower quality. Resizing. Cropping. Screenshotting. The one
-> operation that *preserves* it is "remove properties before sharing" — the
-> privacy feature people are told to use to strip metadata.
+> Of 200 experiments that changed a signed image by even one byte, zero left a
+> valid mark behind. Saving at slightly lower quality. Resizing. Cropping.
+> Screenshotting. And "remove properties before sharing" — the privacy feature
+> people are told to use — does not preserve the mark either. It leaves the
+> claim attached and breaks it.
 
-Land the inversion and then stop talking. It is the whole meeting.
+Land "zero out of two hundred," then stop talking. It is the whole meeting.
 
 If asked how strong the mark was: we tested C2PA, the cryptographically signed
 record Adobe and Leica attach at creation. It is the strongest mark in real
@@ -36,15 +37,17 @@ deployment. Nothing weaker survives what it did not.
 
 One consequence, stated once:
 
-> If the duty sits on the generator alone, the generator marks the image, the
-> next person to touch it saves it, the mark is gone, and everyone in the chain
-> has complied. The duty is satisfied. The goal is not.
+> R.C. 1349.13(B) forbids *distributing* an unmarked AI-generated product, but
+> nothing requires anyone to *preserve* a mark, and there is no intent element.
+> So someone who receives a marked image, saves it, and posts it has distributed
+> an unmarked product — through saving a file. The generator has complied. The
+> liability lands on the person who did the least.
 
-Then the open question, not a recommendation:
+Then the open questions, not recommendations:
 
-> Is there an intended duty on anyone downstream — a platform, an editing tool,
-> a distributor — to preserve a mark they receive? The bill as introduced does
-> not appear to speak to that.
+> Does anyone downstream have a duty to preserve a mark they receive? California
+> and China each wrote that duty. And "watermark" is not defined anywhere in the
+> bill, though a visible overlay and an embedded manifest fail in opposite ways.
 
 **We are not proposing language.** If the conversation drifts toward drafting,
 say that out loud and hand it back: "that's the office's call, we can tell you
@@ -57,14 +60,16 @@ Say this before they ask. It is the reason to keep working together.
 - **Platform uploads.** Nobody sees the file that left the generator; they see
   what Instagram served back. That decides whether the bill reaches the images
   Ohioans encounter. Protocol is written, testing is next.
-- **Sample size.** One signed image so far. The mechanism is established — it is
-  a property of how encoders work, not a statistical tendency — but the rate is
-  not.
+- **Real images.** The corpus is the reference library's test fixtures: many
+  manifest structures, few photographs. Enough to show structure makes no
+  difference; not enough to say anything about image content.
 - **Text watermarking.** Most production systems ship no public detector, so
   nobody outside the vendor can verify them. That gap is itself worth her
   knowing: a mark the AG cannot check is a mark the AG cannot enforce.
-- **Other states.** Comparison matrix is scaffolded and deliberately empty. We
-  are not summarizing other states' law from memory.
+- **The EU.** Article 50 is the one provision mandating machine-readable marking
+  with a robustness qualifier, and EUR-Lex would not serve us the text. That row
+  is empty on purpose. Colorado, Utah, California and China are filled in from
+  the statutes themselves.
 
 ## Minute 14-16 — The ask
 
@@ -73,9 +78,9 @@ Two questions, both of which they can answer in the room:
 1. **Is the office comfortable with a public repo?** Currently private. It is
    the evidence behind every number, and it is more useful to the committee
    public than not. Team lead confirms before anything is pushed.
-2. **Does the sponsor want the platform arm prioritized, or the other-states
-   comparison?** Both are ~3 weeks. The platform arm is the stronger exhibit;
-   the comparison is the more directly usable drafting information.
+2. **Does the sponsor want the platform arm prioritized, or the hand-collected
+   image corpus?** Both are ~3 weeks. The platform arm is the stronger exhibit;
+   the corpus is what turns "the mechanism is established" into a rate.
 
 ## Minute 16-20 — Questions
 
@@ -95,6 +100,12 @@ No, and it is not built that way. Every transformation is named for the ordinary
 behavior it simulates, none of them takes a detector's output as input, and
 there is nothing in it a person could not do with the Save As dialog. We are
 measuring fragility, not causing it.
+
+**"Are you sure about the statutory reading?"**
+We read the As Introduced text, not a summary — there is no LSC analysis
+published for HB 813 yet. Every quote in the memo cites a section. If the office
+reads 1349.13(B) differently we would genuinely like to know; that is a question
+for counsel, not for us.
 
 **"Where do the numbers come from?"**
 Every claim traces to a row in `data/results/runs.csv` with a run ID, timestamp,
@@ -117,6 +128,6 @@ Nothing. Student volunteers, one semester.
 
 - Do not walk through the code.
 - Do not say "watermark removal," in any sentence, for any reason.
-- Do not present the n=1 numbers as a rate. Say "every transform we tested,"
-  not "94% of images."
+- Say "zero of two hundred experiments," not "100% failure" — the denominator
+  is the credible part, and it invites the right follow-up question.
 - Do not propose statutory language, even if invited to. Especially if invited.
